@@ -54,7 +54,7 @@
             <input id="name" name="name" class="group-row" type="text" placeholder="name"> <br>
             <input id="email" name="email" class="group-row" type="text" placeholder="email"> <br>
             <input id="password" name="password" class="group-row" type="text" placeholder="password"> <br>
-            <button class="btn btn-primary" type="button">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
 
         </form>
     </div>
@@ -74,22 +74,51 @@
 
 function dd($in)
 {
-    var_dump($_POST);
+    var_dump($in);
     die;
 }
 
 
-dd($_REQUEST);
-dd($_POST);
+if (isset($_POST['name'])) {
+
+    // create new
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $servername = "127.0.0.1'";
+    $username = "root";
+    $password = "root";
+    $dbname = "one";
+
+    // Create connection
+    $conn = new mysqli('127.0.0.1', $username, $password, $dbname);
+
+    $sql = "INSERT INTO users (users_name, users_email, users_password) VALUES ('$name', '$email', '$hashed_password')";
+
+    if ($conn->query($sql) === true) {
+        echo "Thanks for signing up! Welcome to The One Site.";
+    } else {
+        echo "Error: ".$sql."<br>".$conn->error;
+    }
+
+    $conn->close();
+}
+
+if (isset($_POST['existingEmail'])) {
+
+    // authenticate
 
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+}
 
-$existingEmail = $_POST['existingEmail'];
-$existingPassword = $_POST['existingPassword'];
+
+
+
+//$existingEmail = $_POST['existingEmail'];
+//$existingPassword = $_POST['existingPassword'];
 
 
 ?>
