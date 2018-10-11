@@ -44,23 +44,29 @@
         button:focus {
             outline: 0;
         }
+
+        #echo {
+            text-align: center;
+            font-family: Helvetica, sans-serif
+        }
+
     </style>
 </head>
 <body>
 <div class="login">
     <p id="newUser">Hi! It looks like you're new. You can sign up here:</p>
     <div class="col-12">
-        <form class="group row" action="index.php" method="post">
+        <form class="group row" action=" /thanks.php" method="post">
             <input id="name" name="name" class="group-row" type="text" placeholder="name"> <br>
             <input id="email" name="email" class="group-row" type="text" placeholder="email"> <br>
             <input id="password" name="password" class="group-row" type="text" placeholder="password"> <br>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit" value="submit">Submit</button>
 
         </form>
     </div>
-    <p id="existingUser">Hi! It looks like you're already a member. You can log in here: </p>
+    <p id="existingUser">Hi <?php echo $_POST["name"]; ?>! It looks like you're already a member. You can log in here: </p>
     <div class="col-12">
-        <form class="form-group row" action="index.php" method="post">
+        <form class="form-group row" action=" /thanks.php" method="post">
             <input id="existingEmail" name="existingEmail" class="group-row" type="text" placeholder="email"> <br>
             <input id="existingPassword" name="existingPassword" class="group-row" type="text" placeholder="password"> <br>
             <button class="btn btn-primary" type="button">Submit</button>
@@ -99,7 +105,7 @@ if (isset($_POST['name'])) {
     $sql = "INSERT INTO users (users_name, users_email, users_password) VALUES ('$name', '$email', '$hashed_password')";
 
     if ($conn->query($sql) === true) {
-        echo "Thanks for signing up! Welcome to The One Site.";
+        echo "<div id='echo'>Thanks for signing up! Welcome to The One Site.</div>";
     } else {
         echo "Error: ".$sql."<br>".$conn->error;
     }
@@ -120,5 +126,5 @@ if (isset($_POST['existingEmail'])) {
 //$existingEmail = $_POST['existingEmail'];
 //$existingPassword = $_POST['existingPassword'];
 
-
 ?>
+
